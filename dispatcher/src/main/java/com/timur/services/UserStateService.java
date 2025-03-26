@@ -1,24 +1,39 @@
 package com.timur.services;
 
 import com.timur.enums.UserState;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class UserStateService {
-    private final Map<Long, UserState> chatIdUserStateMap = new HashMap<>();
+    private final RedisTemplate<String, String> redisTemplate;
 
-    public void save(Long chatId, UserState userState){
-        chatIdUserStateMap.put(chatId, userState);
+    private final String USER_STATE_KEY = "userState: ";
+
+    public UserStateService(RedisTemplate<String, String> redisTemplate) {
+        this.redisTemplate = redisTemplate;
     }
 
-    public UserState getUserState(Long chatId){
-        return chatIdUserStateMap.get(chatId);
+    public void save(Long chatId, UserState userState) {
+        String key = USER_STATE_KEY + chatId;
+        redisTemplate.opsForValue().set(key, userState.name(), 14, TimeUnit.DAYS);
     }
+
+    public UserState getUserState(Long chatId) {
+        String key = USER_STATE_KEY + chatId;
+        String state = redisTemplate.opsForValue().get(key);
+        return state != null ? UserState.valueOf(state) : null;
+    }
+
+    public boolean isUserInActiveState(Long chatId) {
+        return getUserState(chatId) != null;
+    }
+
 
     public void clearUserSession(Long chatId) {
-        chatIdUserStateMap.remove(chatId);
+        String key = USER_STATE_KEY + chatId;
+        redisTemplate.opsForValue().getOperations().delete(key);
     }
 }
