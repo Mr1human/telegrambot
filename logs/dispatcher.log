@@ -35,3 +35,20 @@
 2025-03-17 17:19:53 DEBUG TelegramBot:34 - WB
 2025-03-17 17:21:55 DEBUG TelegramBot:34 - /start
 2025-03-17 17:21:59 DEBUG TelegramBot:34 - Хочу докупить товар
+2025-03-23 20:00:15 ERROR TelegramMessageService:27 - Error executing org.telegram.telegrambots.meta.api.methods.send.SendMessage query: [400] Bad Request: message thread not found
+2025-03-23 20:02:04 ERROR TelegramMessageService:27 - Error executing org.telegram.telegrambots.meta.api.methods.send.SendMessage query: [400] Bad Request: message thread not found
+2025-03-23 20:02:08 ERROR TelegramMessageService:27 - Error executing org.telegram.telegrambots.meta.api.methods.send.SendMessage query: [400] Bad Request: message thread not found
+2025-03-23 20:02:09 ERROR TelegramMessageService:27 - Error executing org.telegram.telegrambots.meta.api.methods.send.SendMessage query: [400] Bad Request: message thread not found
+2025-03-23 20:02:54 ERROR TelegramMessageService:27 - Error executing org.telegram.telegrambots.meta.api.methods.send.SendMessage query: [400] Bad Request: message thread not found
+2025-03-23 20:03:01 ERROR TelegramMessageService:27 - Error executing org.telegram.telegrambots.meta.api.methods.send.SendMessage query: [400] Bad Request: message thread not found
+2025-03-23 20:03:13 ERROR TelegramMessageService:27 - Error executing org.telegram.telegrambots.meta.api.methods.send.SendMessage query: [400] Bad Request: message thread not found
+2025-03-25 14:22:42 ERROR TelegramMessageService:72 - org.telegram.telegrambots.meta.exceptions.TelegramApiException: Unable to set chat photo
+2025-03-25 14:26:18 ERROR TelegramMessageService:72 - Error executing org.telegram.telegrambots.meta.api.methods.send.SendMediaGroup query: [400] Bad Request: message thread not found
+2025-03-25 17:52:07 ERROR TelegramMessageService:72 - org.telegram.telegrambots.meta.exceptions.TelegramApiValidationException: Media parameter can't be empty in method: SendMediaGroup(chatId=-1002668115843, messageThreadId=526, medias=[], replyToMessageId=null, disableNotification=null, allowSendingWithoutReply=null, protectContent=null)
+2025-03-25 17:52:07 ERROR TelegramMessageService:72 - org.telegram.telegrambots.meta.exceptions.TelegramApiValidationException: Media parameter can't be empty in method: SendMediaGroup(chatId=-1002668115843, messageThreadId=526, medias=[], replyToMessageId=null, disableNotification=null, allowSendingWithoutReply=null, protectContent=null)
+2025-03-25 17:57:01 ERROR TelegramMessageService:72 - org.telegram.telegrambots.meta.exceptions.TelegramApiValidationException: Media parameter can't be empty in method: SendMediaGroup(chatId=-1002668115843, messageThreadId=529, medias=[], replyToMessageId=null, disableNotification=null, allowSendingWithoutReply=null, protectContent=null)
+2025-03-25 17:57:01 ERROR TelegramMessageService:72 - org.telegram.telegrambots.meta.exceptions.TelegramApiValidationException: Media parameter can't be empty in method: SendMediaGroup(chatId=-1002668115843, messageThreadId=529, medias=[], replyToMessageId=null, disableNotification=null, allowSendingWithoutReply=null, protectContent=null)
+2025-03-27 11:02:43 ERROR TelegramMessageService:27 - Error executing org.telegram.telegrambots.meta.api.methods.send.SendMessage query: [400] Bad Request: message thread not found
+2025-03-27 11:19:52 ERROR TelegramMessageService:27 - Error executing org.telegram.telegrambots.meta.api.methods.send.SendMessage query: [400] Bad Request: message thread not found
+2025-03-27 11:20:06 ERROR TelegramMessageService:27 - Error executing org.telegram.telegrambots.meta.api.methods.send.SendMessage query: [400] Bad Request: message thread not found
+2025-03-28 09:38:12 ERROR TelegramMessageService:27 - Error executing org.telegram.telegrambots.meta.api.methods.send.SendMessage query: [400] Bad Request: group chat was upgraded to a supergroup chat

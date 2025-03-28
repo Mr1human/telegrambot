@@ -1,7 +1,6 @@
 package com.timur.config;
 
 import com.timur.bot.TelegramBot;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.telegram.telegrambots.meta.TelegramBotsApi;

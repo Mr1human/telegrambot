@@ -91,13 +91,13 @@ public class SendMessageFabric {
         return sendMessageToUser(userId, text);
     }
 
-    public SendMessage forwardToOperator(Long userId, Integer threadId, String text) {
+    public SendMessage forwardToOperator(Long userChatId, Integer threadId, String text) {
 
-        if (userStorageService.existsOperatorByUserId(userId)) {
-            Long operatorId = userStorageService.getOperatorByUserId(userId);
-            return sendMessageToOperator(operatorId, threadId, "Сообщение от пользователя " + userId + ": " + "\n" + text);
+        if (userStorageService.existsOperatorByUserChatId(userChatId)) {
+            Long operatorId = userStorageService.getOperatorByUserChatId(userChatId);
+            return sendMessageToOperator(operatorId, threadId, "Сообщение от пользователя " + userChatId + ": " + "\n" + text);
         } else {
-            return sendMessageToUser(userId, "Вы не подключены к техподдержке. Нажмите /start .");
+            return sendMessageToUser(userChatId, "Вы не подключены к техподдержке. Нажмите /start .");
         }
 
     }

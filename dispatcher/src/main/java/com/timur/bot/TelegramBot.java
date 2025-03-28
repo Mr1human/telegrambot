@@ -1,7 +1,6 @@
 package com.timur.bot;
 
 import com.timur.handlers.MessageHandler;
-import com.timur.services.MessageSender;
 import com.timur.services.TelegramMessageService;
 import com.timur.services.UserStateService;
 import jakarta.annotation.PostConstruct;
@@ -23,7 +22,9 @@ import java.util.*;
 @Log4j
 public class TelegramBot extends TelegramLongPollingBot {
 
-    private static final long OPERATORS_CHAT_ID = -1002668115843L;
+    @Value("${telegram.operators.chat.id}")
+    private Long OPERATORS_CHAT_ID;
+
     private final UserStateService userStateService;
 
     @Autowired
@@ -58,21 +59,19 @@ public class TelegramBot extends TelegramLongPollingBot {
 
         if (update.hasMessage()) {
             Message message = update.getMessage();
-            Long userId = message.getFrom().getId();
             Long chatId = message.getChatId();
 
             if (message.hasText() || message.hasPhoto()) {
 
                 if (chatId > 0) {
                     if (message.hasText() && message.getText().equals("/start")) {
-                        messageHandler.name(chatId, userId);
+                        messageHandler.name(chatId);
                     } else if(!userStateService.isUserInActiveState(chatId)) {
-                        messageHandler.handleNoStateUserMessage(userId);
+                        messageHandler.handleNoStateUserMessage(chatId);
                     }else{
                         messageHandler.handleState(message);
                     }
                 } else {
-                    Integer threadId = message.getMessageThreadId();
                     messageHandler.handleResponseOperator(message);
                 }
             }
@@ -87,9 +86,10 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     private void setCommandsForOperator() {
         List<BotCommand> commands = new ArrayList<>();
-        commands.add(new BotCommand("end_chat", "Завершение чата с пользователем"));
+        commands.add(new BotCommand("welcome", "Приветсвтие пользователя"));
         commands.add(new BotCommand("send_message", "Отправляет сообщение пользователю " +
                 "с просьбой удалить негативный отзыв"));
+        commands.add(new BotCommand("end_chat", "Завершение чата с пользователем"));
 
         SetMyCommands setCommands = new SetMyCommands();
         setCommands.setCommands(commands);

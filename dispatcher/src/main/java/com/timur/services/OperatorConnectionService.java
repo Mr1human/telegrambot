@@ -15,11 +15,11 @@ public class OperatorConnectionService {
         this.messageSender = messageSender;
     }
 
-    public void connectToOperator(Long userId, Long operatorsChatId, Integer threadId, String username) {
+    public void connectToOperator(Long userChatId, Long operatorsChatId, Integer threadId, String username) {
 
-        userStorageService.addUserToOperator(userId, operatorsChatId);
-        userStorageService.addUserToThread(userId, threadId);
-        userStorageService.addThreadToUser(threadId, userId);
+        userStorageService.addUserChatToOperator(userChatId, operatorsChatId);
+        userStorageService.addUserChatToThread(userChatId, threadId);
+        userStorageService.addThreadToUserChat(threadId, userChatId);
 
         SendMessage toOperator = sendMessageFabric
                 .sendMessageToOperator(operatorsChatId, threadId, "Пользователь @"

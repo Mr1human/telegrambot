@@ -11,10 +11,9 @@ public class UserStorageService {
 
     private final RedisTemplate<String, String> redisTemplate;
 
-    private static final String USER_TO_OPERATOR_KEY = "userToOperator ";
-    private static final String USER_TO_THREAD_KEY = "userToThread ";
-    private static final String THREAD_TO_USER_KEY = "threadToUser ";
-    private static final String CHAT_ID_TO_USER_ID_KEY = "chatIdToUserId ";
+    private static final String USER_CHAT_TO_OPERATOR_KEY = "userChatToOperator ";
+    private static final String USER_CHAT_TO_THREAD_KEY = "userChatToThread ";
+    private static final String THREAD_TO_USER_CHAT_KEY = "threadToUser ";
 
     public UserStorageService(RedisTemplate<String, String> redisTemplate) {
         this.redisTemplate = redisTemplate;
@@ -22,83 +21,61 @@ public class UserStorageService {
 
 
     // Методы для работы с userToOperator
-    public void addUserToOperator(Long userId, Long operatorChatId) {
-        String key = USER_TO_OPERATOR_KEY + userId;
+    public void addUserChatToOperator(Long userChatId, Long operatorChatId) {
+        String key = USER_CHAT_TO_OPERATOR_KEY + userChatId;
         redisTemplate.opsForValue().set(key, operatorChatId.toString(), 14, TimeUnit.DAYS);
     }
 
-    public Long getOperatorByUserId(Long userId) {
-        String key = USER_TO_OPERATOR_KEY + userId;
+    public Long getOperatorByUserChatId(Long userChatId) {
+        String key = USER_CHAT_TO_OPERATOR_KEY + userChatId;
         String value = redisTemplate.opsForValue().get(key);
         return value != null ? Long.valueOf(value) : null;
     }
 
-    public boolean existsOperatorByUserId(Long userId) {
-        return getOperatorByUserId(userId) != null;
+    public boolean existsOperatorByUserChatId(Long userChatId) {
+        return getOperatorByUserChatId(userChatId) != null;
     }
 
-    public void removeUserToOperator(Long userId) {
-        String key = USER_TO_OPERATOR_KEY + userId;
+    public void removeUserChatToOperator(Long userChatId) {
+        String key = USER_CHAT_TO_OPERATOR_KEY + userChatId;
         redisTemplate.opsForValue().getOperations().delete(key);
     }
 
     // Методы для работы с userToThread
-    public void addUserToThread(Long userId, Integer threadId) {
-        String key = USER_TO_THREAD_KEY + userId;
+    public void addUserChatToThread(Long userChatId, Integer threadId) {
+        String key = USER_CHAT_TO_THREAD_KEY + userChatId;
         redisTemplate.opsForValue().set(key, threadId.toString(), 14, TimeUnit.DAYS);
     }
 
-    public Integer getThreadByUserId(Long userId) {
-        String key = USER_TO_THREAD_KEY + userId;
+    public Integer getThreadByUserChatId(Long userChatId) {
+        String key = USER_CHAT_TO_THREAD_KEY + userChatId;
         String threadId = redisTemplate.opsForValue().get(key);
         return threadId != null ? Integer.valueOf(threadId) : null;
     }
 
-    public void deleteUserToThread(Long userId) {
-        String key = USER_TO_THREAD_KEY + userId;
+    public void removeUserChatToThread(Long userChatId) {
+        String key = USER_CHAT_TO_THREAD_KEY + userChatId;
         redisTemplate.opsForValue().getOperations().delete(key);
     }
 
-    public void removeUserToThread(Long userId) {
-        String key = USER_TO_THREAD_KEY + userId;
-        redisTemplate.opsForValue().getOperations().delete(key);
+    public boolean existThreadByUserChatId(Long userChatId) {
+        return getThreadByUserChatId(userChatId) != null;
     }
 
-    public boolean existThreadByUserId(Long userId) {
-        return getThreadByUserId(userId) != null;
+    // Методы для работы с threadToUserChat
+    public void addThreadToUserChat(Integer threadId, Long userChatId) {
+        String key = THREAD_TO_USER_CHAT_KEY + threadId;
+        redisTemplate.opsForValue().set(key, userChatId.toString(), 14, TimeUnit.DAYS);
     }
 
-    // Методы для работы с threadToUser
-    public void addThreadToUser(Integer threadId, Long userId) {
-        String key = THREAD_TO_USER_KEY + threadId;
-        redisTemplate.opsForValue().set(key, userId.toString(), 14, TimeUnit.DAYS);
+    public Long getUserChatByThread(Integer threadId) {
+        String key = THREAD_TO_USER_CHAT_KEY + threadId;
+        String userChatId = redisTemplate.opsForValue().get(key);
+        return userChatId != null ? Long.valueOf(userChatId) : null;
     }
 
-    public Long getUserIdByThread(Integer threadId) {
-        String key = THREAD_TO_USER_KEY + threadId;
-        String userId = redisTemplate.opsForValue().get(key);
-        return userId != null ? Long.valueOf(userId) : null;
-    }
-
-    public void removeThreadToUser(Integer threadId) {
-        String key = THREAD_TO_USER_KEY + threadId;
-        redisTemplate.opsForValue().getOperations().delete(key);
-    }
-
-    // Методы для работы с chatIdAndUserId
-    public void addChatIdToUserId(Long chatId, Long userId) {
-        String key = CHAT_ID_TO_USER_ID_KEY + chatId;
-        redisTemplate.opsForValue().set(key, userId.toString(), 14, TimeUnit.DAYS);
-    }
-
-    public Long getUserIdByChatId(Long chatId) {
-        String key = CHAT_ID_TO_USER_ID_KEY + chatId;
-        String userId = redisTemplate.opsForValue().get(key);
-        return userId != null ? Long.valueOf(userId) : null;
-    }
-
-    public void removeChatIdToUserId(Long chatId) {
-        String key = CHAT_ID_TO_USER_ID_KEY + chatId;
+    public void removeThreadToUserChat(Integer threadId) {
+        String key = THREAD_TO_USER_CHAT_KEY + threadId;
         redisTemplate.opsForValue().getOperations().delete(key);
     }
 }

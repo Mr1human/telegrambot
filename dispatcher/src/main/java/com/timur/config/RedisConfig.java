@@ -15,11 +15,8 @@ public class RedisConfig {
     @Value("${spring.data.redis.host}")
     private String REDIS_HOST;
 
-//    @Value("${spring.data.redis.username}")
-//    private String REDIS_USERNAME;
-
-//    @Value("${spring.data.redis.password}")
-//    private String REDIS_PASSWORD;
+    @Value("${spring.data.redis.password}")
+    private String REDIS_PASSWORD;
 
     @Value("${spring.data.redis.port}")
     private int REDIS_PORT;
@@ -30,10 +27,7 @@ public class RedisConfig {
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
         redisStandaloneConfiguration.setHostName(REDIS_HOST);
         redisStandaloneConfiguration.setPort(REDIS_PORT);
-        //redisStandaloneConfiguration.setUsername(REDIS_USERNAME);
-        //redisStandaloneConfiguration.setPassword(REDIS_PASSWORD);
-        System.out.println("----------------"+redisStandaloneConfiguration.getHostName());
-        System.out.println("----------------"+redisStandaloneConfiguration.getPort());
+        redisStandaloneConfiguration.setPassword(REDIS_PASSWORD);
         return new JedisConnectionFactory(redisStandaloneConfiguration);
     }
 
