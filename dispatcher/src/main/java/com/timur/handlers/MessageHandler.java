@@ -129,9 +129,15 @@ public class MessageHandler {
     }
 
     private void handleCaseName(Long chatId, String text) {
-        requestUserService.addRequest(chatId, text);
-        userStateService.save(chatId, UserState.START);
-        start(chatId);
+
+        if(text != null && text.length()<40){
+            requestUserService.addRequest(chatId, text);
+            userStateService.save(chatId, UserState.START);
+            start(chatId);
+        }else{
+            name(chatId);
+        }
+
     }
 
     public void name(Long userChatId) {
